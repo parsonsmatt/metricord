@@ -32,8 +32,8 @@ runHandler handler = do
     app <- getTestYesod
     fakeHandlerGetLogger appLogger app handler
 
-
 withApp :: SpecWith (TestApp App) -> Spec
+{-
 withApp = before $ do
     settings <- loadYamlSettings
         ["config/test-settings.yml", "config/settings.yml"]
@@ -43,6 +43,8 @@ withApp = before $ do
     wipeDB foundation
     logWare <- liftIO $ makeLogWare foundation
     return (foundation, logWare)
+-}
+withApp _ = pure ()
 
 -- This function will truncate all of the tables in your database.
 -- 'withApp' calls it before each test, creating a clean environment for each

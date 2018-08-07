@@ -19,10 +19,10 @@ spec = withApp $ do
                 fileByLabelExact "Choose a file" "test/Spec.hs" "text/plain" -- talk about self-reference
                 byLabelExact "What's on the file?" "Some Content"
 
-          statusIs 200
-          -- more debugging printBody
-          htmlAllContain ".upload-response" "text/plain"
-          htmlAllContain ".upload-response" "Some Content"
+            statusIs 200
+            -- more debugging printBody
+            htmlAllContain ".upload-response" "text/plain"
+            htmlAllContain ".upload-response" "Some Content"
 
         -- This is a simple example of using a database access in a test.  The
         -- test will succeed for a fresh scaffolded site with an empty database,
