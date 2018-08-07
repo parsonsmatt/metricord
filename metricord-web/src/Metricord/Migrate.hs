@@ -2,6 +2,8 @@ module Metricord.Migrate where
 
 import Import
 
+import Metricord
+
 import System.Directory (listDirectory)
 import qualified Data.Set as Set
 import qualified Data.Text as Text
@@ -9,9 +11,9 @@ import qualified Data.Text.Encoding as Text
 import qualified Data.ByteString as BS
 import Database.Persist.Sql
 
-runMigrations :: FilePath -> Handler ()
+runMigrations :: FilePath -> Task ()
 runMigrations migrationDirectory = do
-    migrations <- runDB $ selectList [] [Asc MigrationFilename]
+    migrations <- runDb $ selectList [] [Asc MigrationFilename]
     files <- liftIO $ listDirectory migrationDirectory
     let sqlFiles =
             Set.fromList
@@ -25,7 +27,7 @@ runMigrations migrationDirectory = do
         toRun = Set.toList (Set.difference sqlFiles alreadyRun)
     for_ toRun $ \filepath -> do
         contents <- liftIO $ Text.decodeUtf8 <$> BS.readFile (Text.unpack filepath)
-        runDB $ do
+        runDb $ do
             rawExecute contents []
             now <- liftIO getCurrentTime
             void $ insert Migration
