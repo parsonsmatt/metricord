@@ -25,3 +25,10 @@ Metric
     value       Double
 
     deriving Eq Show
+
+Migration
+    filename    Text
+    run         UTCTime
+
+    Primary filename
+    deriving Eq Show
