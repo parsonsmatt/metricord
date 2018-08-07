@@ -1,0 +1,7 @@
+<div .masthead>
+    <div .container>
+        <div .row>
+            <h1 .header>
+                Metricord
+            <h2>
+                Record and view personal metrics

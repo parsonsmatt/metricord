@@ -1,0 +1,8 @@
+resolver: lts-12.2
+
+packages:
+- metricord-web
+
+extra-deps:
+- rowdy-0.0.1.0
+- rowdy-yesod-0.0.1.0
