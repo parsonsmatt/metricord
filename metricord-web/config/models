@@ -4,16 +4,24 @@
 User
     email       EmailAddress
 
+    deriving Eq Show
+
 Schema
     creator     UserId
     name        Text
+
+    deriving Eq Show
 
 Permission
     user        UserId
     schema      SchemaId
     role        Role
 
+    deriving Eq Show
+
 Metric
     schema      SchemaId
     timestamp   UTCTime
     value       Double
+
+    deriving Eq Show
