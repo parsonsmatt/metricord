@@ -29,7 +29,7 @@ main = do
 
 defaultDir :: Maybe FilePath <?> k -> FilePath
 defaultDir =
-    fromMaybe "./migrations"
+    fromMaybe "./config/migrations"
     . unHelpful
 
 type DirectoryArg = Maybe FilePath <?> "The location of the SQL migrations. Defaults to ./migrations"
