@@ -21,9 +21,11 @@ dependencies:
 - fast-logger >=2.2 && <2.5
 - file-embed
 - foreign-store
+- generic-lens
 - hjsmin >=0.1 && <0.3
 - http-client-tls >=0.3 && <0.4
 - http-conduit >=2.3 && <2.4
+- lens
 - monad-control >=0.3 && <1.1
 - monad-logger >=0.3 && <0.4
 - optparse-generic
@@ -51,6 +53,7 @@ dependencies:
 - yesod-static >=1.6 && <1.7
 
 default-extensions:
+  - TypeApplications
   - DataKinds
   - DeriveGeneric
   - DerivingStrategies

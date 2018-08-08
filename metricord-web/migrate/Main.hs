@@ -10,22 +10,27 @@ import Options.Generic
 import Control.Concurrent
 import qualified Data.Text as Text
 
+import Metricord
 import Metricord.Migrate
+import Foundation
+import Application
 
 main :: IO ()
 main = do
     cmd <- getRecord "metricord-migrate"
     case cmd of
-        New {..} -> do
-            let dir =
-                    fromMaybe "./migrations"
-                    . unHelpful
-                    $ directory
-            newMigration dir (unHelpful tableName) (unHelpful field)
-        Run {..} ->
-            putStrLn "Not implemented yet"
+        New {..} ->
+            newMigration (defaultDir directory) (unHelpful tableName) (unHelpful field)
+        Run {..} -> do
+            ctx <- Ctx . appConnPool . snd <$> getFoundation
+            flip runReaderT ctx
+                . unTaskT
+                $ runMigrations (defaultDir directory)
 
-    print cmd
+defaultDir :: Maybe FilePath <?> k -> FilePath
+defaultDir =
+    fromMaybe "./migrations"
+    . unHelpful
 
 type DirectoryArg = Maybe FilePath <?> "The location of the SQL migrations. Defaults to ./migrations"
 
