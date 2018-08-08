@@ -1,5 +1,5 @@
 {-# LANGUAGE PackageImports #-}
-import "metricord" Application (develMain)
+import "metricord-web" Application (develMain)
 import Prelude (IO)
 
 main :: IO ()

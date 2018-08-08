@@ -1,4 +1,4 @@
-name:    metricord
+name:    metricord-web
 version: 0.1.0
 
 dependencies:
@@ -7,46 +7,61 @@ dependencies:
 # See: https://ghc.haskell.org/trac/ghc/ticket/12130
 - base >=4.8.2.0 && <4.9 || >=4.9.1.0 && <5
 
-- yesod >=1.6 && <1.7
-- yesod-core >=1.6 && <1.7
-- yesod-auth >=1.6 && <1.7
-- yesod-static >=1.6 && <1.7
-- yesod-form >=1.6 && <1.7
+- aeson >=0.6 && <1.4
+- bytestring >=0.9 && <0.11
+- case-insensitive
 - classy-prelude >=1.4 && <1.5
 - classy-prelude-conduit >=1.4 && <1.5
 - classy-prelude-yesod >=1.4 && <1.5
-- bytestring >=0.9 && <0.11
-- text >=0.11 && <2.0
+- conduit >=1.0 && <2.0
+- containers
+- data-default
+- directory >=1.1 && <1.4
+- email-validate
+- fast-logger >=2.2 && <2.5
+- file-embed
+- foreign-store
+- generic-lens
+- hjsmin >=0.1 && <0.3
+- http-client-tls >=0.3 && <0.4
+- http-conduit >=2.3 && <2.4
+- lens
+- monad-control >=0.3 && <1.1
+- monad-logger >=0.3 && <0.4
+- optparse-generic
 - persistent >=2.8 && <2.9
 - persistent-postgresql >=2.8 && <2.9
 - persistent-template >=2.5 && <2.9
-- template-haskell
-- shakespeare >=2.0 && <2.1
-- hjsmin >=0.1 && <0.3
-- monad-control >=0.3 && <1.1
-- wai-extra >=3.0 && <3.1
-- yaml >=0.8 && <0.9
-- http-client-tls >=0.3 && <0.4
-- http-conduit >=2.3 && <2.4
-- directory >=1.1 && <1.4
-- warp >=3.0 && <3.3
-- data-default
-- aeson >=0.6 && <1.4
-- conduit >=1.0 && <2.0
-- monad-logger >=0.3 && <0.4
-- fast-logger >=2.2 && <2.5
-- wai-logger >=2.2 && <2.4
-- file-embed
-- safe
-- unordered-containers
-- containers
-- vector
-- time
-- case-insensitive
-- wai
-- foreign-store
 - rowdy
 - rowdy-yesod
+- safe
+- shakespeare >=2.0 && <2.1
+- template-haskell
+- text >=0.11 && <2.0
+- time
+- unordered-containers
+- vector
+- wai
+- wai-extra >=3.0 && <3.1
+- wai-logger >=2.2 && <2.4
+- warp >=3.0 && <3.3
+- yaml >=0.8 && <0.9
+- yesod >=1.6 && <1.7
+- yesod-auth >=1.6 && <1.7
+- yesod-core >=1.6 && <1.7
+- yesod-form >=1.6 && <1.7
+- yesod-static >=1.6 && <1.7
+
+default-extensions:
+  - TypeApplications
+  - DataKinds
+  - DeriveGeneric
+  - DerivingStrategies
+  - GeneralizedNewtypeDeriving
+  - NoImplicitPrelude
+  - OverloadedStrings
+  - TypeOperators
+  - UndecidableInstances
 
 # The library contains all of our application code. The executable
 # defined below is just a thin wrapper.
@@ -68,7 +83,18 @@ library:
 
 # Runnable executable for our application
 executables:
-  metricord:
+  migrate:
+    main: Main.hs
+    source-dirs: migrate
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - metricord-web
+    - optparse-generic
+    - optparse-applicative
+  metricord-web:
     main: main.hs
     source-dirs: app
     ghc-options:
@@ -76,19 +102,19 @@ executables:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - metricord
+    - metricord-web
     when:
     - condition: flag(library-only)
       buildable: false
 
 # Test suite
 tests:
-  metricord-test:
+  web-test:
     main: Spec.hs
     source-dirs: test
     ghc-options: -Wall
     dependencies:
-    - metricord
+    - metricord-web
     - hspec >=2.0.0
     - yesod-test
 

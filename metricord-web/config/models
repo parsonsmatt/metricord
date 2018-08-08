@@ -2,17 +2,33 @@
 -- Syntax for this file here: https://github.com/yesodweb/persistent/blob/master/docs/Persistent-entity-syntax.md
 
 User
-    ident Text
-    password Text Maybe
-    UniqueUser ident
+    email       EmailAddress
 
-    deriving Typeable Show Eq
+    deriving Eq Show
 
-Email
-    email Text
-    userId UserId Maybe
-    verkey Text Maybe
+Schema
+    creator     UserId
+    name        Text
 
-    UniqueEmail email
+    deriving Eq Show
 
-    deriving Show Eq
+Permission
+    user        UserId
+    schema      SchemaId
+    role        Role
+
+    deriving Eq Show
+
+Metric
+    schema      SchemaId
+    timestamp   UTCTime
+    value       Double
+
+    deriving Eq Show
+
+Migration
+    filename    Text
+    run         UTCTime
+
+    Primary filename
+    deriving Eq Show

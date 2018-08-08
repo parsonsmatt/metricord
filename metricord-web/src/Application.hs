@@ -12,6 +12,7 @@ module Application
     , develMain
     , makeFoundation
     , makeLogWare
+    , getFoundation
     -- * for DevelMain
     , getApplicationRepl
     , shutdownApp
@@ -127,11 +128,16 @@ warpSettings foundation =
 -- | For yesod devel, return the Warp settings and WAI Application.
 getApplicationDev :: IO (Settings, Application)
 getApplicationDev = do
-    settings <- getAppSettings
-    foundation <- makeFoundation settings
+    (_, foundation) <- getFoundation
     wsettings <- getDevSettings $ warpSettings foundation
     app <- makeApplication foundation
     return (wsettings, app)
+
+getFoundation :: IO (AppSettings, App)
+getFoundation = do
+    settings <- getAppSettings
+    foundation <- makeFoundation settings
+    pure (settings, foundation)
 
 getAppSettings :: IO AppSettings
 getAppSettings = loadYamlSettings [configSettingsYml] [] useEnv

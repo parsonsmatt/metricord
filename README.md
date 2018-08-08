@@ -7,3 +7,5 @@ An application for recording personal metrics in an open-source and friendly way
 ## Project Structure
 
 ### `metricord-web`
+
+The webapp for metricord. Eventually, a library and other packages will be extracted from this.
