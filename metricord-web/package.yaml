@@ -26,6 +26,7 @@ dependencies:
 - http-conduit >=2.3 && <2.4
 - monad-control >=0.3 && <1.1
 - monad-logger >=0.3 && <0.4
+- optparse-generic
 - persistent >=2.8 && <2.9
 - persistent-postgresql >=2.8 && <2.9
 - persistent-template >=2.5 && <2.9
@@ -49,16 +50,20 @@ dependencies:
 - yesod-form >=1.6 && <1.7
 - yesod-static >=1.6 && <1.7
 
+default-extensions:
+  - DataKinds
+  - DeriveGeneric
+  - DerivingStrategies
+  - GeneralizedNewtypeDeriving
+  - NoImplicitPrelude
+  - OverloadedStrings
+  - TypeOperators
+  - UndecidableInstances
+
 # The library contains all of our application code. The executable
 # defined below is just a thin wrapper.
 library:
   source-dirs: src
-  default-extensions:
-  - OverloadedStrings
-  - DerivingStrategies
-  - GeneralizedNewtypeDeriving
-  - UndecidableInstances
-  - NoImplicitPrelude
   when:
   - condition: (flag(dev)) || (flag(library-only))
     then:
@@ -84,6 +89,8 @@ executables:
     - -with-rtsopts=-N
     dependencies:
     - metricord-web
+    - optparse-generic
+    - optparse-applicative
   metricord-web:
     main: main.hs
     source-dirs: app
