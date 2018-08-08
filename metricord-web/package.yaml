@@ -1,4 +1,4 @@
-name:    metricord
+name:    metricord-web
 version: 0.1.0
 
 dependencies:
@@ -83,8 +83,8 @@ executables:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - metricord
-  metricord:
+    - metricord-web
+  metricord-web:
     main: main.hs
     source-dirs: app
     ghc-options:
@@ -92,19 +92,19 @@ executables:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - metricord
+    - metricord-web
     when:
     - condition: flag(library-only)
       buildable: false
 
 # Test suite
 tests:
-  metricord-test:
+  web-test:
     main: Spec.hs
     source-dirs: test
     ghc-options: -Wall
     dependencies:
-    - metricord
+    - metricord-web
     - hspec >=2.0.0
     - yesod-test
 
